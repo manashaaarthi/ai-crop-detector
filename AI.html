@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌿 AI Crop Disease Detector</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f0fdf4, #e0f7fa);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+    }
+
+    h1 {
+      color: #2e7d32;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    #cureBox {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-left: 5px solid #4caf50;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌱 AI Crop Disease Detector</h1>
+    <p>Select a crop and click "Open Model" to begin prediction. You'll also see advice based on disease.</p>
+
+    <select id="cropSelect">
+      <option value="">-- Select Crop --</option>
+      <option value="tomato">Tomato</option>
+      <option value="wheat">Wheat</option>
+      <option value="sugarcane">Sugarcane</option>
+      <option value="grape">Grape</option>
+      <option value="banana">Banana</option>
+      <option value="rice">Rice</option>
+      <option value="potato">Potato</option>
+      <option value="corn">Corn</option>
+      <option value="eggplant">Eggplant</option>
+
+
+    </select>
+
+    <button onclick="openModel()">Open Model</button>
+
+    <div id="cureBox">
+      <span class="label">Suggested Cure:</span>
+      <p id="cureText">[Advice appears here based on crop]</p>
+    </div>
+  </div>
+
+  <script>
+    const modelLinks = {
+      tomato: "https://teachablemachine.withgoogle.com/models/hIhWi1Q43/",
+      wheat: "https://teachablemachine.withgoogle.com/models/Nj4Tkf3uI/",
+      grape: "https://teachablemachine.withgoogle.com/models/IaDnaJ9W6/",
+      banana: "https://teachablemachine.withgoogle.com/models/EtzeULhczr/",
+      rice: "https://teachablemachine.withgoogle.com/models/BRp2w7DTo/",
+      corn: "https://teachablemachine.withgoogle.com/models/r1Fr8-_Dp/",
+      eggplant: "https://teachablemachine.withgoogle.com/models/ReJrYWbum/",
+      potato: "https://teachablemachine.withgoogle.com/models/y43NgatFV/",
+      sugarcane: "https://teachablemachine.withgoogle.com/models/QDDRVU3Z9/",
+      
+    };
+
+    const cureAdvice = {
+       tomato: "Maintain proper spacing, avoid overhead watering, and apply appropriate fungicides or insecticides regularly.",
+      wheat: "Use resistant varieties, rotate crops, and apply preventive fungicides to control common fungal diseases.",
+      grape: "Prune regularly, ensure air circulation, and apply copper-based or systemic fungicides as needed.",
+      banana: "Remove infected leaves, improve airflow, and apply systemic or copper-based fungicides.",
+      rice: "Avoid excess nitrogen, ensure good drainage, and apply suitable fungicides or insecticides.",
+      corn: "Use resistant hybrids, rotate crops, and apply fungicides at early disease signs.",
+      eggplant: "Practice crop rotation, remove infected parts, and use neem oil or appropriate fungicides.",
+      potato: "Use certified seeds, rotate crops, and manage pests and fungi with suitable treatments.",
+      sugarcane: "Use virus-free material, remove infected canes, and apply fungicides or micronutrients as needed."
+    };
+    function openModel() {
+      const selected = document.getElementById("cropSelect").value;
+      if (selected && modelLinks[selected]) {
+        window.open(modelLinks[selected], "_blank");
+        document.getElementById("cureBox").style.display = "block";
+        document.getElementById("cureText").innerText = cureAdvice[selected];
+      } else {
+        alert("Please select a crop first.");
+      }
+    }
+  </script>
+</body>
+</html>
